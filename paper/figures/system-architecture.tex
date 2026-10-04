@@ -1,0 +1,159 @@
+\begin{tikzpicture}[pai-figure]
+\tikzset{
+  pai-arch-box/.style={
+    rounded corners=3pt,
+    draw=paiBorder,
+    fill=white,
+    line width=0.65pt,
+    minimum height=0.92cm,
+    align=center,
+    inner xsep=5pt,
+    inner ysep=4pt
+  },
+  pai-source-box/.style={
+    pai-arch-box,
+    draw=paiUser,
+    fill=paiUserLight,
+    text width=1.72cm,
+    minimum height=2.25cm
+  },
+  pai-control-box/.style={
+    pai-arch-box,
+    text width=1.48cm
+  },
+  pai-planner-box/.style={
+    pai-arch-box,
+    draw=paiDecision,
+    fill=paiDecisionLight,
+    text width=2.18cm,
+    minimum height=0.86cm
+  },
+  pai-commit-box/.style={
+    pai-arch-box,
+    draw=paiDecision,
+    fill=paiDecisionLight,
+    text width=1.50cm
+  },
+  pai-state-box/.style={
+    pai-arch-box,
+    draw=paiAgent,
+    fill=paiAgentLight,
+    text width=2.12cm,
+    minimum height=0.95cm
+  },
+  pai-output-box/.style={
+    pai-arch-box,
+    draw=paiAgent,
+    fill=paiAgentLight,
+    text width=2.12cm,
+    minimum height=0.72cm
+  },
+  pai-policy-box/.style={
+    pai-arch-box,
+    draw=paiNeutral,
+    fill=paiPanel,
+    text width=4.15cm,
+    minimum height=0.78cm
+  },
+  pai-reject-box/.style={
+    pai-arch-box,
+    draw=paiRevision,
+    fill=paiAgentLight,
+    text=paiRevision,
+    text width=2.75cm,
+    minimum height=0.76cm
+  },
+  pai-flow/.style={
+    -{Latex[length=1.8mm]},
+    draw=paiNeutral,
+    line width=0.68pt,
+    rounded corners=2pt
+  },
+  pai-accepted/.style={
+    -{Latex[length=1.8mm]},
+    draw=paiDecision,
+    line width=0.78pt,
+    rounded corners=2pt
+  },
+  pai-rejected/.style={
+    -{Latex[length=1.8mm]},
+    draw=paiRevision,
+    line width=0.78pt
+  }
+}
+
+\filldraw[pai-panel] (0,0) rectangle (16.8,6.20);
+\node[pai-panel-title, anchor=west] at (0.38,5.82)
+  {Temporal plan validation and execution};
+
+\node[pai-panel-title, anchor=west] at (0.29,4.95) {Event sources};
+\node[pai-source-box] (sources) at (1.32,2.76) {
+  \textbf{User arrivals $u_i$}\\[-1pt]
+  {\scriptsize unprocessed $\rightarrow U_t$}\\[6pt]
+  \textbf{Dialogue}\\[-1pt]
+  \textbf{pacemaker $w_t$}\\[6pt]
+  \textbf{Due}\\[-1pt]
+  \textbf{actions $D_t$}\\[-1pt]
+  {\scriptsize $0,\ldots,n$ actions}
+};
+
+\filldraw[rounded corners=5pt, fill=white, draw=paiBorder, line width=0.65pt]
+  (2.45,1.48) rectangle (13.45,4.24);
+\node[pai-panel-title, text=paiNeutral, anchor=west, align=left] at (2.58,3.88)
+  {Deterministic\\[-2pt]control layer};
+
+\node[pai-control-box] (dispatch) at (3.45,2.76)
+  {1\\Form event\\bundle $E_t$};
+\node[pai-control-box, text width=1.60cm] (snapshot) at (5.52,2.76)
+  {2\\Take decision\\snapshot\\[-1pt]{\scriptsize $S_t,E_t$}};
+\node[pai-control-box, text width=1.72cm] (validate) at (7.92,2.76)
+  {3\\Validate\\plan\\[1pt]{\scriptsize structure + rules\\[-3pt]+ contact policy}};
+\node[pai-control-box, text width=1.68cm] (draft) at (10.17,2.76)
+  {4\\Prepare next\\state\\[-1pt]{\scriptsize temporary copy}};
+\node[pai-commit-box] (commit) at (12.42,2.76)
+  {5\\Finalize\\transition\\[-1pt]{\scriptsize all or none}};
+
+\node[pai-planner-box] (planner) at (5.52,5.05)
+  {Planner $\pi$\\[-1pt]{\scriptsize LLM-based}};
+\node[pai-policy-box] (policy) at (10.65,5.05)
+  {\mbox{Autonomous-contact policy}\\[-1pt]
+   {\scriptsize $\operatorname{allow}(t)$}};
+
+\node[pai-panel-title, anchor=east] at (16.36,4.95) {Transition results};
+\node[pai-output-box] (output) at (15.48,3.43) {
+  \textbf{Visible output}\\[-1pt]
+  {\scriptsize $V_t$: $0,\ldots,n$ messages}
+};
+\node[pai-state-box] (state) at (15.48,1.95) {
+  \textbf{Updated state}\\[1pt]
+  {\scriptsize $S_{t^+}$}
+};
+
+\node[pai-reject-box] (reject) at (7.92,1.02)
+  {Candidate rejected\\[1pt]{\scriptsize no output;\\[-3pt]candidate not applied}};
+
+\draw[pai-flow] (sources.east) -- (dispatch.west);
+\draw[pai-flow] (dispatch.east) -- (snapshot.west);
+\draw[pai-accepted] (validate.east) -- (draft.west);
+\draw[pai-accepted] (draft.east) -- (commit.west);
+\coordinate (resultfork) at (13.82,2.76);
+\draw[pai-accepted] (commit.east) -- (resultfork);
+\draw[pai-accepted] (resultfork) |- (output.west);
+\draw[pai-accepted] (resultfork) |- (state.west);
+
+\draw[pai-flow]
+  (snapshot.north) -- (planner.south);
+\draw[pai-flow]
+  (planner.east) -- (7.92,5.05) -- (validate.north);
+\node[pai-secondary, align=center] at (7.92,5.59)
+  {candidate temporal\\plan};
+\draw[pai-flow]
+  (policy.south) -- ++(0,-0.20) -| ([xshift=7pt]validate.north);
+
+\draw[pai-rejected] (validate.south) -- (reject.north);
+\draw[pai-flow, densely dashed]
+  (state.south) -- (15.48,0.34) -- (5.52,0.34) -- (snapshot.south);
+\node[pai-secondary, fill=paiPanel, inner xsep=3pt] at (11.25,0.34)
+  {state for the next event};
+
+\end{tikzpicture}

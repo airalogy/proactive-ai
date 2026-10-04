@@ -1,0 +1,89 @@
+\begin{tikzpicture}[pai-figure]
+
+% (c) Conventional request-response turns.
+\filldraw[pai-panel]
+  (0,5.02) rectangle (15.9,7.25);
+\node[pai-panel-title, anchor=west] at (0.28,6.92) {c};
+\node[pai-panel-title, anchor=east] at (1.42,6.45) {$U$};
+\node[pai-panel-title, anchor=east] at (1.42,5.70) {$AI$};
+\draw[pai-axis] (1.72,5.30) -- (15.50,5.30) node[above left=-1pt] {$t$};
+
+\node[pai-user-event] (a-u1) at (3.00,6.45) {$u_1$};
+\node[pai-agent-event] (a-a1) at (4.70,5.70) {$a_1$};
+\node[pai-user-event] (a-u2) at (7.20,6.45) {$u_2$};
+\node[pai-agent-event] (a-a2) at (8.90,5.70) {$a_2$};
+\node[pai-user-event] (a-u3) at (11.40,6.45) {$u_3$};
+\node[pai-agent-event] (a-a3) at (13.10,5.70) {$a_3$};
+\foreach \n in {a-u1,a-a1,a-u2,a-a2,a-u3,a-a3} {
+  \draw[pai-event-line] (\n.south) -- (\n.south |- 0,5.30);
+}
+\draw[pai-causal] (a-u1.south east) to[out=-28,in=145] (a-a1.north west);
+\draw[pai-causal] (a-u2.south east) to[out=-28,in=145] (a-a2.north west);
+\draw[pai-causal] (a-u3.south east) to[out=-28,in=145] (a-a3.north west);
+
+% (d) Human asynchronous messaging.
+\filldraw[pai-panel]
+  (0,2.52) rectangle (15.9,4.75);
+\node[pai-panel-title, anchor=west] at (0.28,4.42) {d};
+\node[pai-panel-title, anchor=east] at (1.42,3.95) {$P_A$};
+\node[pai-panel-title, anchor=east] at (1.42,3.20) {$P_B$};
+\draw[pai-axis] (1.72,2.80) -- (15.50,2.80) node[above left=-1pt] {$t$};
+
+\node[pai-user-event] (b-m1) at (2.75,3.95) {$m_1$};
+\node[pai-user-event] (b-m2) at (3.75,3.95) {$m_2$};
+\node[pai-agent-event] (b-r1) at (5.65,3.20) {$r_1$};
+\node[pai-agent-event] (b-r2) at (6.65,3.20) {$r_2$};
+\node[pai-user-event] (b-m3) at (8.45,3.95) {$m_3$};
+\node[pai-agent-event] (b-r3) at (10.20,3.20) {$r_3$};
+\node[pai-agent-event] (b-i1) at (13.35,3.20) {$i_1$};
+\foreach \n in {b-m1,b-m2,b-r1,b-r2,b-m3,b-r3,b-i1} {
+  \draw[pai-event-line] (\n.south) -- (\n.south |- 0,2.80);
+}
+\draw[pai-silence-span]
+  (10.80,3.57) -- node[above, inner sep=2pt] {$\Delta t$} (12.75,3.57);
+
+% (e) Replannable proactive AI timeline.
+\filldraw[pai-panel]
+  (0,0.02) rectangle (15.9,2.25);
+\node[pai-panel-title, anchor=west] at (0.28,1.92) {e};
+\node[pai-panel-title, anchor=east] at (1.42,1.45) {$U$};
+\node[pai-panel-title, anchor=east] at (1.42,0.70) {$AI$};
+\draw[pai-axis] (1.72,0.30) -- (15.50,0.30) node[above left=-1pt] {$t$};
+
+\filldraw[pai-plan-group]
+  (4.82,0.42) rectangle (10.02,1.14);
+\node[pai-secondary, text=paiDecision, fill=paiDecisionLight,
+  anchor=west, inner xsep=2pt] at (4.96,1.14) {one plan};
+
+\node[pai-user-event] (c-u1) at (2.35,1.45) {$u_1$};
+\node[pai-user-event] (c-u2) at (3.25,1.45) {$u_2$};
+\node[pai-decision] (c-plan) at (4.22,0.70) {$\pi$};
+\node[pai-agent-event] (c-a1) at (5.52,0.70) {$a_1$};
+\node[pai-agent-event] (c-a2) at (6.92,0.70) {$a_2$};
+\node[pai-user-event] (c-u3) at (8.18,1.45) {$u_3$};
+\node[pai-pending-event] (c-pending) at (9.48,0.70) {$\widehat{a}_3$};
+\node[pai-decision] (c-delta) at (11.62,0.70) {$\delta$};
+\node[pai-agent-event] (c-a4) at (13.30,1.05) {$a_4$};
+\node[draw=paiNeutral, circle, minimum size=0.44cm, inner sep=0pt]
+  (c-silence) at (13.30,0.58) {$\varnothing$};
+\foreach \n in {c-u1,c-u2,c-plan,c-a1,c-a2,c-u3,c-pending,c-delta,c-silence} {
+  \draw[pai-event-line] (\n.south) -- (\n.south |- 0,0.30);
+}
+\draw[pai-event-line] (c-a4.south) -- (c-a4.south |- 0,0.30);
+\draw[pai-causal] (c-u1.south east) to[out=-25,in=155] (c-plan.north west);
+\draw[pai-causal] (c-u2.south east) to[out=-35,in=135] (c-plan.north west);
+\draw[pai-causal] (c-plan.east) -- (c-a1.west);
+\draw[pai-silence-span]
+  (c-a1.east) -- node[pai-secondary, fill=paiDecisionLight,
+  inner xsep=2pt, above=1pt] {$\Delta_1$} (c-a2.west);
+\draw[pai-silence-span]
+  (c-a2.east) -- node[pos=0.25, pai-secondary, fill=paiDecisionLight,
+  inner xsep=2pt, above=1pt] {$\Delta_2$} (c-pending.west);
+\draw[pai-revision] (c-u3.south east) to[out=-25,in=145] (c-pending.north west);
+\node[pai-cancel-mark]
+  at (c-pending.north east) {$\times$};
+\draw[pai-causal] (c-delta.east) -- (12.35,0.70);
+\draw[pai-causal] (12.35,0.70) -- (c-a4.west);
+\draw[pai-causal] (12.35,0.70) -- (c-silence.west);
+
+\end{tikzpicture}

@@ -1,0 +1,170 @@
+% Shared publication figure style.
+% Keep typography semantic so it follows the active paper template.
+% Sizes below are specified for the final figure, before any outer resize.
+
+\definecolor{paiUser}{HTML}{2F5D8A}
+\definecolor{paiUserLight}{HTML}{E9F1F8}
+\definecolor{paiAgent}{HTML}{A34A3A}
+\definecolor{paiAgentLight}{HTML}{F8ECE8}
+\definecolor{paiDecision}{HTML}{397261}
+\definecolor{paiDecisionLight}{HTML}{E7F2EE}
+\definecolor{paiBorder}{HTML}{C9CDD2}
+\definecolor{paiNeutral}{HTML}{68717A}
+\definecolor{paiPanel}{HTML}{FAFAF8}
+\definecolor{paiRevision}{HTML}{B3261E}
+
+\newcommand{\paiFigureFont}{\sffamily\fontsize{8.25}{9.9}\selectfont}
+\newcommand{\paiPanelTitleFont}{\sffamily\bfseries\fontsize{9}{10.8}\selectfont}
+\newcommand{\paiSecondaryFont}{\sffamily\fontsize{7.5}{9}\selectfont}
+\newcommand{\paiAvatarFont}{\sffamily\bfseries\fontsize{7}{8.4}\selectfont}
+
+\tikzset{
+  pai-figure/.style={
+    x=1cm,
+    y=1cm,
+    font=\paiFigureFont
+  },
+  pai-panel/.style={
+    rounded corners=5pt,
+    fill=paiPanel,
+    draw=paiBorder,
+    line width=0.55pt
+  },
+  pai-panel-title/.style={
+    font=\paiPanelTitleFont
+  },
+  pai-chat-surface/.style={
+    rounded corners=4pt,
+    fill=white,
+    draw=paiBorder,
+    line width=0.55pt
+  },
+  pai-user-message/.style={
+    rounded corners=3pt,
+    draw=paiUser,
+    fill=paiUserLight,
+    line width=0.7pt,
+    minimum height=0.46cm,
+    inner xsep=5pt,
+    inner ysep=3pt,
+    align=center
+  },
+  pai-agent-message/.style={
+    rounded corners=3pt,
+    draw=paiAgent,
+    fill=paiAgentLight,
+    line width=0.7pt,
+    minimum height=0.46cm,
+    inner xsep=5pt,
+    inner ysep=3pt,
+    align=center
+  },
+  pai-user-avatar/.style={
+    circle,
+    draw=paiUser,
+    fill=paiUser,
+    text=white,
+    line width=0.6pt,
+    minimum size=0.46cm,
+    inner sep=0pt,
+    font=\paiAvatarFont
+  },
+  pai-agent-avatar/.style={
+    circle,
+    draw=paiAgent,
+    fill=paiAgent,
+    text=white,
+    line width=0.6pt,
+    minimum size=0.46cm,
+    inner sep=0pt,
+    font=\paiAvatarFont
+  },
+  pai-secondary/.style={
+    text=paiNeutral,
+    font=\paiSecondaryFont
+  },
+  pai-divider/.style={
+    densely dotted,
+    draw=paiBorder,
+    line width=0.55pt
+  },
+  pai-silence-span/.style={
+    densely dotted,
+    draw=paiNeutral,
+    line width=0.65pt
+  },
+  pai-user-event/.style={
+    rounded corners=2pt,
+    draw=paiUser,
+    fill=paiUserLight,
+    line width=0.7pt,
+    minimum width=0.78cm,
+    minimum height=0.45cm,
+    inner sep=2pt
+  },
+  pai-agent-event/.style={
+    rounded corners=2pt,
+    draw=paiAgent,
+    fill=paiAgentLight,
+    line width=0.7pt,
+    minimum width=0.78cm,
+    minimum height=0.45cm,
+    inner sep=2pt
+  },
+  pai-pending-event/.style={
+    rounded corners=2pt,
+    draw=paiAgent,
+    fill=white,
+    dashed,
+    line width=0.8pt,
+    minimum width=0.9cm,
+    minimum height=0.48cm,
+    inner sep=2pt
+  },
+  pai-plan-group/.style={
+    rounded corners=3pt,
+    draw=paiDecision,
+    fill=paiDecisionLight,
+    densely dashed,
+    line width=0.6pt
+  },
+  pai-decision/.style={
+    diamond,
+    aspect=1.45,
+    draw=paiDecision,
+    fill=paiDecisionLight,
+    line width=0.8pt,
+    minimum width=0.65cm,
+    minimum height=0.58cm,
+    inner sep=1pt
+  },
+  pai-event-line/.style={
+    draw=paiBorder,
+    line width=0.45pt
+  },
+  pai-causal/.style={
+    -{Latex[length=1.7mm]},
+    draw=paiNeutral,
+    line width=0.55pt
+  },
+  pai-revision/.style={
+    -{Latex[length=1.7mm]},
+    draw=paiRevision,
+    line width=0.7pt
+  },
+  pai-axis/.style={
+    -{Latex[length=1.8mm]},
+    draw=paiNeutral,
+    line width=0.55pt
+  },
+  pai-cancel-mark/.style={
+    draw=paiRevision,
+    fill=white,
+    text=paiRevision,
+    circle,
+    line width=0.7pt,
+    minimum size=0.34cm,
+    inner sep=0pt,
+    font=\paiAvatarFont
+  }
+}

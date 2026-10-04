@@ -1,0 +1,31 @@
+{
+  "name": "proactive-ai",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "packageManager": "pnpm@11.20.0",
+  "scripts": {
+    "dev": "pnpm --filter @proactive-ai/demo dev",
+    "build": "pnpm --filter @proactive-ai/demo build",
+    "test": "pnpm --recursive --if-present test && pnpm test:model-harness",
+    "test:model-harness": "node --import tsx --test scripts/test/*.test.ts",
+    "lint": "pnpm --filter @proactive-ai/demo lint",
+    "typecheck": "pnpm exec tsc --noEmit -p tsconfig.json && pnpm --filter @proactive-ai/core typecheck",
+    "model:smoke": "node --env-file-if-exists=apps/demo/.env.local --import tsx scripts/model-smoke.ts",
+    "model:validate": "node --env-file-if-exists=apps/demo/.env.local --import tsx scripts/model-validate.ts",
+    "paper:figure": "node scripts/export-paper-figure.mjs",
+    "paper:build": "make -C paper en",
+    "paper:build:zh": "make -C paper zh",
+    "paper:build:all": "make -C paper all",
+    "paper:export": "make -C paper export"
+  },
+  "devDependencies": {
+    "@proactive-ai/core": "workspace:*",
+    "@types/node": "22.19.19",
+    "tsx": "^4.20.6",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

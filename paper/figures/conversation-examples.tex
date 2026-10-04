@@ -1,0 +1,65 @@
+\begin{tikzpicture}[pai-figure]
+
+% (a) A familiar chat interface constrained to paired turns.
+\filldraw[pai-panel]
+  (0,0.10) rectangle (5.10,5.70);
+\node[pai-panel-title, anchor=west] at (0.25,5.42)
+  {a\quad Paired request--response};
+\filldraw[pai-chat-surface]
+  (0.18,0.28) rectangle (4.92,5.13);
+
+\node[pai-secondary] at (2.55,4.81) {09:00};
+\node[pai-user-avatar] at (4.48,4.31) {U};
+\node[pai-user-message, anchor=east, text width=2.15cm] at (4.12,4.31)
+  {Help me prepare.};
+\node[pai-agent-avatar] at (0.63,3.57) {AI};
+\node[pai-agent-message, anchor=west, text width=2.15cm] at (0.98,3.57)
+  {Here is a plan.};
+
+\draw[pai-divider]
+  (0.68,3.00) -- (4.42,3.00);
+\node[pai-secondary] at (2.55,2.75) {09:05};
+\node[pai-user-avatar] at (4.48,2.23) {U};
+\node[pai-user-message, anchor=east, text width=1.70cm] at (4.12,2.23)
+  {What next?};
+\node[pai-agent-avatar] at (0.63,1.47) {AI};
+\node[pai-agent-message, anchor=west, text width=3.05cm] at (0.98,1.47)
+  {Try a mock interview.};
+\node[pai-secondary] at (2.55,0.75)
+  {one prompt $\rightarrow$ one answer};
+
+% (b) A concrete failure in which a scheduled message becomes stale.
+\filldraw[pai-panel]
+  (5.35,0.10) rectangle (15.90,5.70);
+\node[pai-panel-title, anchor=west] at (5.60,5.42)
+  {b\quad A stale scheduled message};
+\filldraw[pai-chat-surface]
+  (5.53,0.28) rectangle (15.72,5.13);
+
+\node[pai-secondary] at (10.62,4.87) {Mon 09:00};
+\node[pai-user-avatar] at (15.20,4.41) {U};
+\node[pai-user-message, anchor=east, text width=2.45cm] at (14.82,4.41)
+  {Interview tomorrow.};
+\node[pai-user-avatar] at (15.20,3.87) {U};
+\node[pai-user-message, anchor=east, text width=1.75cm] at (14.82,3.87)
+  {I'm nervous.};
+\node[pai-agent-avatar] at (6.05,3.27) {AI};
+\node[pai-agent-message, anchor=west, text width=2.55cm] at (6.40,3.27)
+  {That makes sense.};
+\node[pai-agent-avatar] at (6.05,2.73) {AI};
+\node[pai-agent-message, anchor=west, text width=2.55cm] at (6.40,2.73)
+  {Want to rehearse?};
+
+\node[pai-secondary] at (10.62,2.23) {Mon 16:30};
+\node[pai-user-avatar] at (15.20,1.79) {U};
+\node[pai-user-message, anchor=east, text width=2.45cm] at (14.82,1.79)
+  {Interview cancelled.};
+\draw[pai-silence-span]
+  (8.90,1.30) -- (12.34,1.30);
+\node[pai-secondary, fill=white, inner xsep=4pt] at (10.62,1.30)
+  {plan remains unchanged overnight};
+\node[pai-agent-avatar] at (6.05,0.61) {AI};
+\node[pai-agent-message, anchor=west, text width=4.65cm] at (6.40,0.61)
+  {Good luck with your interview today!};
+
+\end{tikzpicture}
